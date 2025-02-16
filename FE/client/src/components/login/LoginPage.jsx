@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { useState } from "react";
+import { FaLock, FaEnvelope } from "react-icons/fa";
 import Card from "./Card";
 import Label from "./Label";
 import Input from "./Input";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate(); // 🛠 Điều hướng
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -18,15 +20,26 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <img
         src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="relative z-10 flex items-center justify-center p-12">
+
+      <div
+        className="relative z-20 flex items-center justify-center p-12"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Card>
-          <h2 className="text-3xl font-extrabold text-gray-800 mb-8 text-center">
+          {/* Nút đóng sẽ điều hướng về trang chủ */}
+          <button
+            className="absolute top-4 right-4 text-blue-700 text-4xl font-bold hover:text-red-600 transition duration-200 animate-[pulse_0.7s_infinite]"
+            onClick={() => navigate("/")}
+          >
+            ✖
+          </button>
+          <h2 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">
             Log in to continue your learning journey
           </h2>
           <form onSubmit={handleLogin}>
