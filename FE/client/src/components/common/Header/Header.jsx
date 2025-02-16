@@ -11,9 +11,9 @@ const Header = () => {
           V-Learning
         </Link>
         <div className="hidden md:flex space-x-6">
-          <a href="#" className="text-foreground hover:text-primary">
+          <Link to={"/courses"} className="text-foreground hover:text-primary">
             Courses
-          </a>
+          </Link>
           <a href="#" className="text-foreground hover:text-primary">
             Categories
           </a>
