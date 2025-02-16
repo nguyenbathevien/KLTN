@@ -1,8 +1,8 @@
-import HeroSection from "../../components/guest/HeroSection";
-import PopularCategories from "../../components/guest/PopularCategories";
-import FeaturedCourses from "../../components/guest/FeaturedCourses";
-import WhyChooseUs from "../../components/guest/WhyChooseUs";
-import Testimonials from "../../components/guest/Testimonials";
+import FeaturedCourses from "../../../components/guest/Home/FeaturedCourses";
+import HeroSection from "../../../components/guest/Home/HeroSection";
+import PopularCategories from "../../../components/guest/Home/PopularCategories";
+import Testimonials from "../../../components/guest/Home/Testimonials";
+import WhyChooseUs from "../../../components/guest/Home/WhyChooseUs";
 
 const HomePage = () => {
   return (

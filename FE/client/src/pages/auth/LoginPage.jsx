@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaLock, FaEnvelope } from "react-icons/fa";
-import Card from "./Card";
-import Label from "./Label";
-import Input from "./Input";
-import Button from "./Button";
+import Card from "../../components/common/login/Card";
+import Label from "../../components/common/login/Label";
+import Input from "../../components/common/login/Input";
+import Button from "../../components/common/login/Button";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -85,7 +85,7 @@ const LoginPage = () => {
           </form>
           <div className="mt-6 text-center">
             <p className="text-gray-700">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <a href="#" className="text-purple-600 font-bold underline">
                 Sign up
               </a>

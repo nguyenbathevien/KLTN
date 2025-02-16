@@ -1,4 +1,5 @@
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const FeaturedCourses = () => {
   // Fake data cho các khóa học nổi bật
@@ -39,7 +40,8 @@ const FeaturedCourses = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {courses.map((course) => (
-              <div
+              <Link
+                to={`/course/${course.id}`}
                 key={course.id}
                 className="bg-card dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
               >
@@ -67,7 +69,7 @@ const FeaturedCourses = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

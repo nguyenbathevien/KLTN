@@ -1,15 +1,15 @@
-import logo from "../../../assets/images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const navigate = useNavigate();
-
   return (
     <nav className="bg-card dark:bg-gray-800 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-primary dark:text-primary-foreground">
+        <Link
+          to={"/"}
+          className="text-2xl font-bold text-primary dark:text-primary-foreground"
+        >
           V-Learning
-        </h1>
+        </Link>
         <div className="hidden md:flex space-x-6">
           <a href="#" className="text-foreground hover:text-primary">
             Courses
@@ -24,12 +24,12 @@ const Header = () => {
             Contact
           </a>
         </div>
-        <button
-          onClick={() => navigate("/login")} // Chuyển hướng đến trang đăng nhập
+        <Link
+          to={"/login"}
           className="bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-90"
         >
           Sign In
-        </button>
+        </Link>
       </div>
     </nav>
   );
