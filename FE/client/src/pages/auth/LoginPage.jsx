@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaLock, FaEnvelope } from "react-icons/fa";
+import { FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
 import Card from "../../components/common/login/Card";
 import Label from "../../components/common/login/Label";
 import Input from "../../components/common/login/Input";
@@ -10,6 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); // 🛠 Điều hướng
 
   const handleLogin = (e) => {
@@ -55,17 +56,23 @@ const LoginPage = () => {
                 icon={<FaEnvelope />}
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-6 relative">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 icon={<FaLock />}
               />
+              <span
+                className="absolute top-[3.9rem] right-3 text-gray-600 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
             <div className="flex items-center justify-between mb-6">
               <label className="flex items-center text-gray-700">
