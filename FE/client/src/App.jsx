@@ -3,10 +3,10 @@ import HomeLayout from "./components/common/Layout/HomeLayout";
 import CourseDetailPage from "./pages/guest/CourseDetail/CourseDetailPage";
 import HomePage from "./pages/guest/Home/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
-import CourseListPage from "./pages/guest/CourseList/CourseListPage";
 import TeacherRoutes from "./routes/TeacherRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
+import CourseCatalogPage from "./pages/guest/CourseCatalog/CourseCatalogPage";
+
 function App() {
   return (
     <AuthProvider>
@@ -28,7 +28,7 @@ function App() {
             path="/courses"
             element={
               <HomeLayout>
-                <CourseListPage />
+                <CourseCatalogPage />
               </HomeLayout>
             }
           />
