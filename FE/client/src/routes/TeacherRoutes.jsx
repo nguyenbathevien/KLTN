@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import TeacherLayout from "../components/common/Layout/TeacherLayout";
 import DashboardTeacher from "../pages/teacher/DashboardTeacher";

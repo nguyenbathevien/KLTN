@@ -6,6 +6,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import TeacherRoutes from "./routes/TeacherRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
 import CourseCatalogPage from "./pages/guest/CourseCatalog/CourseCatalogPage";
+import StudentRoutes from "./routes/StudentRoutes";
 
 function App() {
   return (
@@ -41,6 +42,10 @@ function App() {
               </HomeLayout>
             }
           />
+
+          {/* Route dashboard student */}
+          <Route path="/student/*" element={<StudentRoutes />} />
+
           {/* Thêm route cho giảng viên với PrivateRoute */}
           <Route
             path="/teacher/*"
