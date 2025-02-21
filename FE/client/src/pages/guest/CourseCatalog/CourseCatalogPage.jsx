@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight, FiSearch } from "react-icons/fi";
 import { FaStar, FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -195,6 +195,13 @@ const CourseCatalogPage = () => {
       matchesPrice
     );
   });
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900">

@@ -7,6 +7,13 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-card shadow-sm">
       <div className="container mx-auto px-4">
@@ -14,7 +21,11 @@ const Header = () => {
           <div className="text-2xl font-bold text-primary">V-Learning</div>
 
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to={"/"} className="text-foreground hover:text-primary">
+            <Link
+              onClick={scrollToTop}
+              to={"/"}
+              className="text-foreground hover:text-primary"
+            >
               Home
             </Link>
             <Link
