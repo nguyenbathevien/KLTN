@@ -7,6 +7,7 @@ import TeacherRoutes from "./routes/TeacherRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
 import CourseCatalogPage from "./pages/guest/CourseCatalog/CourseCatalogPage";
 import StudentRoutes from "./routes/StudentRoutes";
+// import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
