@@ -7,6 +7,7 @@ import TeacherRoutes from "./routes/TeacherRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
 import CourseCatalogPage from "./pages/guest/CourseCatalog/CourseCatalogPage";
 import StudentRoutes from "./routes/StudentRoutes";
+import Register from "./pages/auth/Register";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           />
           {/* Các route khác có thể được thêm vào đây */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
           {/* Danh sách các khóa học */}
           <Route
             path="/courses"
@@ -49,7 +51,7 @@ function App() {
 
           {/* Thêm route cho giảng viên với PrivateRoute */}
           <Route
-            path="/teacher/*"
+            path="/instructor/*"
             element={
               // <PrivateRoute> dòng này để bảo vệ dashboard teacer phải đăng nhập thì mới vào được( giờ tạm tắt để css )
               <TeacherRoutes />
