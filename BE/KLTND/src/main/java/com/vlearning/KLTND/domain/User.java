@@ -1,5 +1,9 @@
 package com.vlearning.KLTND.domain;
 
+import java.time.Instant;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vlearning.KLTND.util.constant.RoleEnum;
 
 import jakarta.persistence.Column;
@@ -9,6 +13,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -32,6 +38,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -50,4 +57,27 @@ public class User {
     private String address;
 
     private String phone;
+
+    private boolean active;
+
+    private boolean protect;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT+7")
+    private Instant createdAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT+7")
+    private Instant updatedAt;
+
+    @PrePersist
+    public void handleBeforeCreate() {
+        // gán thời gian hiện tại
+        this.createdAt = Instant.now();
+        this.setProtect(false);
+        this.setActive(true);
+    }
+
+    @PreUpdate
+    public void handleBeforeUpdate() {
+        this.updatedAt = Instant.now();
+    }
 }
