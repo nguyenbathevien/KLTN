@@ -7,12 +7,9 @@ import TeacherRoutes from "./routes/TeacherRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
 import CourseCatalogPage from "./pages/guest/CourseCatalog/CourseCatalogPage";
 import StudentRoutes from "./routes/StudentRoutes";
-<<<<<<< HEAD
 import Page404 from "./Page404";
 import AdminRoutes from "./routes/AdminRoutes";
-=======
 import Register from "./pages/auth/Register";
->>>>>>> 495de59f44ed06424c181e3f9efb8a5c2a3236e9
 // import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
 /* CSS cho table antd của trang admin  */
 .admin-table .ant-table {
     background: transparent !important;
@@ -100,7 +99,6 @@
   
 
   
-=======
 /* Custom base styles */
 @layer base {
   body {
@@ -130,4 +128,3 @@
     @apply w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors;
   }
 }
->>>>>>> 495de59f44ed06424c181e3f9efb8a5c2a3236e9

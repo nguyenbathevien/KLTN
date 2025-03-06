@@ -8,8 +8,7 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { navigateHistory } from "./utils/setting";
 import { Provider } from "react-redux";
-import Store from "./redux/Store";
-
+import {Store} from "./redux/Store"
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={Store}>
