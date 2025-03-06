@@ -25,7 +25,7 @@ const TeacherLayout = ({ children }) => {
           </div>
           <nav className="mt-5">
             <Link
-              to="/teacher/dashboard"
+              to="/instructor/dashboard"
               className={`flex items-center px-4 py-2 text-sm font-medium ${isActive(
                 "dashboard"
               )}`}
@@ -46,7 +46,7 @@ const TeacherLayout = ({ children }) => {
               Dashboard
             </Link>
             <Link
-              to="/teacher/courses"
+              to="/instructor/courses"
               className={`flex items-center px-4 py-2 mt-1 text-sm font-medium ${isActive(
                 "courses"
               )}`}
@@ -67,7 +67,7 @@ const TeacherLayout = ({ children }) => {
               Courses
             </Link>
             <Link
-              to="/teacher/statistics"
+              to="/instructor/statistics"
               className={`flex items-center px-4 py-2 mt-1 text-sm font-medium ${isActive(
                 "statistics"
               )}`}
@@ -88,7 +88,7 @@ const TeacherLayout = ({ children }) => {
               Statistics
             </Link>
             <Link
-              to="/teacher/profile"
+              to="/instructor/profile"
               className={`flex items-center px-4 py-2 mt-1 text-sm font-medium ${isActive(
                 "profile"
               )}`}

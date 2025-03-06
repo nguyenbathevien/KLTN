@@ -7,6 +7,7 @@ import CourseContent from "../../../components/guest/CourseDetail/CourseContent"
 import TeacherInformation from "../../../components/guest/CourseDetail/TeacherInformation";
 import FQA from "../../../components/guest/CourseDetail/FQA";
 import NeedHelp from "../../../components/guest/CourseDetail/NeedHelp";
+import { useEffect } from "react";
 
 // Dữ liệu mẫu cho chi tiết khóa học
 const courseDetails = {
@@ -45,6 +46,13 @@ const CourseDetailPage = () => {
   const { id } = useParams();
 
   console.log(id);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   // Dữ liệu câu hỏi thường gặp (FAQ)
 
