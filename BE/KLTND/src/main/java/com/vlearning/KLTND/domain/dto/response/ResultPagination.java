@@ -1,17 +1,26 @@
 package com.vlearning.KLTND.domain.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class ResultPagination {
     private Object result;
 
     private Meta meta;
 
-    @Getter
-    @Setter
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
+
+    public Meta getMeta() {
+        return meta;
+    }
+
+    public void setMeta(Meta meta) {
+        this.meta = meta;
+    }
+
     public static class Meta {
         // số trang hiện tại
         private int page;
@@ -24,5 +33,38 @@ public class ResultPagination {
 
         // tổng số phần tử
         private long totalElement;
+
+        public int getPage() {
+            return page;
+        }
+
+        public void setPage(int page) {
+            this.page = page;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public int getTotalPage() {
+            return totalPage;
+        }
+
+        public void setTotalPage(int totalPage) {
+            this.totalPage = totalPage;
+        }
+
+        public long getTotalElement() {
+            return totalElement;
+        }
+
+        public void setTotalElement(long totalElement) {
+            this.totalElement = totalElement;
+        }
+
     }
 }
