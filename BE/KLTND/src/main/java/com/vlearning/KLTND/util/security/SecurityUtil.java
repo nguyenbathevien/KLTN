@@ -28,6 +28,9 @@ public class SecurityUtil {
     @Value("${jwt.access-token-validity-in-seconds}")
     private long accessTokenExpiration;
 
+    // @Value("${jwt.refresh-token-validity-in-seconds}")
+    // private long refreshTokenExpiration;
+
     @Autowired
     private JwtEncoder jwtEncoder;
 
@@ -57,4 +60,24 @@ public class SecurityUtil {
 
         return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
+
+    // public String createRefreshToken(UserAuth user) {
+    // Instant currentTime = Instant.now();
+    // Instant validity = currentTime.plus(this.refreshTokenExpiration,
+    // ChronoUnit.SECONDS);
+
+    // // header
+    // JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();
+
+    // // payload
+    // JwtClaimsSet claims = JwtClaimsSet.builder()
+    // .issuedAt(currentTime)
+    // .expiresAt(validity)
+    // .subject(user.getEmail())
+    // .claim("user", user)
+    // .build();
+
+    // return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader,
+    // claims)).getTokenValue();
+    // }
 }

@@ -27,61 +27,62 @@ import jakarta.validation.Valid;
 @RequestMapping("/v1")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
+        @Autowired
+        private AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @Autowired
-    private SecurityUtil securityUtil;
+        @Autowired
+        private SecurityUtil securityUtil;
 
-    @Autowired
-    private UserService userService;
+        @Autowired
+        private UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<ResponseDTO<UserAuth>> login(@RequestBody @Valid LoginReq userLogin)
-            throws CustomException {
+        @PostMapping("/login")
+        public ResponseEntity<ResponseDTO<UserAuth>> login(@RequestBody @Valid LoginReq userLogin)
+                        throws CustomException {
 
-        // Nạp input gồm username/password vào Security
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                userLogin.getLoginName(), userLogin.getPassword());
+                // Nạp input gồm username/password vào Security
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                                userLogin.getLoginName(), userLogin.getPassword());
 
-        // xác thực người dùng
-        /*
-         *
-         * Dòng này thực hiện việc xác thực thông qua authenticationManagerBuilder.
-         * authenticationManagerBuilder sẽ kiểm tra thông tin đăng nhập và gọi đến
-         * UserDetailsService (hoặc loadUserByUsername()) để nạp thông tin người dùng từ
-         * database.
-         *
-         * Nếu thông tin là hợp lệ, quá trình xác thực thành công và một đối tượng
-         * Authentication chứa thông tin xác thực sẽ được trả về.
-         *
-         */
-        Authentication authentication = authenticationManagerBuilder.getObject()
-                .authenticate(authenticationToken);
+                // xác thực người dùng
+                Authentication authentication = authenticationManagerBuilder.getObject()
+                                .authenticate(authenticationToken);
 
-        // lưu thông tin vào context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+                // lưu thông tin vào context
+                SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // response custom
-        User user = this.userService.handleGetUserByUsername(userLogin.getLoginName());
+                // response custom
+                User user = this.userService.handleGetUserByUsername(userLogin.getLoginName());
 
-        UserAuth responseUser = new UserAuth(
-                user.getId(),
-                user.getEmail(),
-                user.getFullName(),
-                user.getRole().getRoleValue(),
-                "");
+                UserAuth responseUser = new UserAuth(
+                                user.getId(),
+                                user.getEmail(),
+                                user.getFullName(),
+                                user.getRole().getRoleValue(),
+                                "",
+                                "");
 
-        ResponseDTO<UserAuth> res = new ResponseDTO<>();
-        res.setStatus(HttpStatus.OK.value());
-        res.setMessage("Login success");
+                ResponseDTO<UserAuth> res = new ResponseDTO<>();
+                res.setStatus(HttpStatus.OK.value());
+                res.setMessage("Login success");
 
-        // create a token
-        // truyền vào thông tin đăng nhập của người dùng để lấy token
-        String accessToken = this.securityUtil.createAccessToken(responseUser);
-        responseUser.setAccessToken(accessToken);
+                // create a token
+                // truyền vào thông tin đăng nhập của người dùng để lấy token
+                String accessToken = this.securityUtil.createAccessToken(responseUser);
+                responseUser.setAccessToken(accessToken);
 
-        res.setData(responseUser);
-        return ResponseEntity.ok(res);
-    }
+                String refreshToken = this.securityUtil.createAccessToken(responseUser);
+                responseUser.setRefreshToken(refreshToken);
+                user.setRefreshToken(refreshToken);
+
+                res.setData(responseUser);
+                return ResponseEntity.ok(res);
+        }
+
+        // @PostMapping("/refresh")
+        // public ResponseEntity<ResponseDTO<UserAuth>> refresh(@RequestBody LoginReq
+        // userLogin) {
+
+        // }
+
 }

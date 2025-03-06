@@ -25,7 +25,7 @@ public class CorsConfig {
         // cho phép các URL nào có thể kết nối tới backend
         // ở đây truyền vào tên miền của frontend
         configuration.setAllowedOrigins(
-                Arrays.asList("http://localhost:3000"));
+                Arrays.asList("http://localhost:3000", "http://localhost:5173"));
 
         // các method nào đc kết nối
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
