@@ -3,7 +3,6 @@ package com.vlearning.KLTND.domain;
 import java.time.Instant;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vlearning.KLTND.util.constant.RoleEnum;
 
@@ -24,10 +23,6 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "users")
@@ -41,7 +36,6 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
-    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
