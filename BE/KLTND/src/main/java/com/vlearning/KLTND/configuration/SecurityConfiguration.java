@@ -115,18 +115,7 @@ public class SecurityConfiguration {
             CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
 
         http
-                // CSRF (Cross-Site Request Forgery) bị tắt vì ứng dụng có thể dùng JWT hoặc API
-                // stateless, không cần bảo vệ CSRF.
                 .csrf(csrf -> csrf.disable())
-
-                /*
-                 * CORS (Cross-Origin Resource Sharing) là một cơ chế bảo mật trên web cho phép
-                 * các tài nguyên như hình ảnh, API, font chữ, v.v. từ một miền (origin) có thể
-                 * được truy cập bởi một miền khác. CORS được thiết kế để bảo vệ người dùng web
-                 * khỏi các yêu cầu không mong muốn từ những trang web không đáng tin cậy.
-                 */
-                // cầu hình từ CorsConfig sẽ ghi đè lại cấu hình mặc định này
-                .cors(Customizer.withDefaults())
 
                 .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
 

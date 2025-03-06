@@ -37,6 +37,10 @@ public class UserService {
         return this.userRepository.findById(id).isPresent() ? this.userRepository.findById(id).get() : null;
     }
 
+    public User handleGetUserByUsername(String username) {
+        return this.userRepository.findByEmail(username);
+    }
+
     public ResultPagination handleFetchSeveralUser(Specification<User> spec, Pageable pageable) {
 
         Page<User> page = this.userRepository.findAll(spec, pageable);
