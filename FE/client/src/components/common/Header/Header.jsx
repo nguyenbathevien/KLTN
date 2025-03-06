@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { FiHeart, FiBell, FiMenu, FiShoppingCart, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const userDropdownRef = useRef(null);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -14,11 +15,33 @@ const Header = () => {
     });
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        userDropdownRef.current &&
+        !userDropdownRef.current.contains(event.target)
+      ) {
+        setIsUserDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 bg-card shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="text-2xl font-bold text-primary">V-Learning</div>
+          <Link
+            to={"/"}
+            onClick={scrollToTop}
+            className="text-2xl font-bold text-primary"
+          >
+            V-Learning
+          </Link>
 
           <nav className="hidden md:flex items-center space-x-6">
             <Link
@@ -95,9 +118,11 @@ const Header = () => {
             </div>
 
             <div className="relative group">
-              <button className="p-2 rounded-full hover:bg-muted">
-                <FiShoppingCart className="w-5 h-5" />
-              </button>
+              <Link to={"/student/cart"} onClick={scrollToTop}>
+                <div className="p-2 rounded-full hover:bg-muted">
+                  <FiShoppingCart className="w-5 h-5" />
+                </div>
+              </Link>
               <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 3
               </span>
@@ -129,7 +154,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="relative" ref={userDropdownRef}>
               <button
                 onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
                 className="p-2 rounded-full hover:bg-muted"
@@ -138,12 +163,13 @@ const Header = () => {
               </button>
               {isUserDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-card rounded-md shadow-lg py-1">
-                  <a
-                    href="#"
+                  <Link
+                    to={"/student/dashboard"}
+                    onClick={() => setIsUserDropdownOpen(false)}
                     className="block px-4 py-2 text-sm text-foreground hover:bg-muted"
                   >
                     Profile Settings
-                  </a>
+                  </Link>
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-foreground hover:bg-muted"
