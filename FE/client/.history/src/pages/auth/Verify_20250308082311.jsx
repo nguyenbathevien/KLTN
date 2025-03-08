@@ -10,6 +10,7 @@ const Verify = () => {
     "",
     "",
     "",
+    "",
   ]);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +36,7 @@ const Verify = () => {
     newCode[index] = value;
     setVerificationCode(newCode);
 
-    if (value && index < 4) {
+    if (value && index < 5) {
       const nextInput = document.querySelector(
         `input[name="code-${index + 1}"]`
       );
@@ -48,11 +49,11 @@ const Verify = () => {
     const pastedData = e.clipboardData
       .getData("text")
       .replace(/[^\d]/g, "")
-      .slice(0, 5);
+      .slice(0, 6);
     const newCode = [...verificationCode];
 
     for (let i = 0; i < pastedData.length; i++) {
-      if (i < 5) newCode[i] = pastedData[i];
+      if (i < 6) newCode[i] = pastedData[i];
     }
 
     setVerificationCode(newCode);
@@ -71,7 +72,7 @@ const Verify = () => {
     e.preventDefault();
     const code = verificationCode.join("");
 
-    if (code.length !== 5) {
+    if (code.length !== 6) {
       setError("Please enter the complete verification code");
       return;
     }
@@ -131,7 +132,7 @@ const Verify = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-500 to-blue-600 text-black py-4 px-6 rounded-lg w-full text-lg  transition shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
         <div className="text-center">
           <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-primary/10 mb-4">
@@ -209,5 +210,3 @@ const Verify = () => {
 };
 
 export default Verify;
-// </content>
-// </create_file>

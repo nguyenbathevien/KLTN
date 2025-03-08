@@ -131,7 +131,7 @@ const Verify = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-500 to-blue-600 text-black py-4 px-6 rounded-lg w-full text-lg  transition shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-red-500 to-blue-600 text-white py-4 px-6 rounded-lg w-full text-lg hover:opacity-90 transition shadow-md">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
         <div className="text-center">
           <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-primary/10 mb-4">
