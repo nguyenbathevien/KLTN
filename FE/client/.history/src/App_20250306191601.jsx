@@ -3,7 +3,6 @@ import TeacherRoutes from "./routes/TeacherRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
 import StudentRoutes from "./routes/StudentRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
-import Verify from "./pages/auth/Verify";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
@@ -16,7 +15,7 @@ function App() {
 
           {/* Route dashboard student */}
           <Route path="/student/*" element={<StudentRoutes />} />
-          <Route path="/verify" element={<Verify />} />
+
           {/* Thêm route cho giảng viên với PrivateRoute */}
           <Route
             path="/instructor/*"
