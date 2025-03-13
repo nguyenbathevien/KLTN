@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";

@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TeacherRoutes from "./routes/TeacherRoutes";
-import { AuthProvider } from "./contexts/AuthContext";
 import StudentRoutes from "./routes/StudentRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
 import Verify from "./pages/auth/Verify";
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "./contexts/AuthContext";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <ToastContainer />
     </AuthProvider>
   );
 }
