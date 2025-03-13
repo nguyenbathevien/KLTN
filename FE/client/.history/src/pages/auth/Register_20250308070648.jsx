@@ -260,7 +260,7 @@ const Register = () => {
                 // onClick={() => handleSignup()}
                 // type="submit"
                 onClick={handleSignup} // Thay đổi này
-                type="button"
+                type="button
                 disabled={isSubmitting}
                 className="w-full py-2 px-4 bg-[#E41E3F] text-white rounded hover:bg-[#C41E3F]"
               >

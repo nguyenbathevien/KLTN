@@ -33,45 +33,39 @@ const Register = () => {
 
   //   return axios.post(URL_BACKEND, data, config);
   // };
-  const handleSignup = async (e) => {
-    e.preventDefault(); // Ngăn form submit mặc định
-    if (validateForm()) {
-      setIsSubmitting(true);
-      try {
-        const URL_BACKEND = "http://localhost:8080/v1/email/register";
-        const data = {
-          loginName: formData.email,
-        };
-        const config = {
-          withCredentials: true, // Quan trọng để xử lý cookie
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+  //   if (validateForm()) {
+  //     setIsSubmitting(true);
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:8080/v1/email/register",
+  //         {
+  //           loginName: formData.email,
+  //         },
+  //         {
+  //           withCredentials: true,
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
 
-        const response = await axios.post(URL_BACKEND, data, config);
-
-        if (response.data) {
-          // Chuyển hướng đến trang verify và truyền email qua state
-          navigate("/verify", {
-            state: {
-              email: formData.email,
-            },
-          });
-        }
-      } catch (error) {
-        console.error("Registration error:", error);
-        setErrors({
-          submit:
-            error.response?.data?.message ||
-            "Registration failed. Please try again.",
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
-    }
-  };
-
+  //       if (response.data) {
+  //         // Chuyển hướng đến trang verify với email
+  //         navigate("/verify", { state: { email: formData.email } });
+  //       }
+  //     } catch (error) {
+  //       setErrors({
+  //         submit:
+  //           error.response?.data?.message ||
+  //           "Registration failed. Please try again.",
+  //       });
+  //     } finally {
+  //       setIsSubmitting(false);
+  //     }
+  //   }
+  // };
   // Slider data
   const slides = [
     {
@@ -257,10 +251,8 @@ const Register = () => {
               </div>
 
               <button
-                // onClick={() => handleSignup()}
-                // type="submit"
-                onClick={handleSignup} // Thay đổi này
-                type="button"
+                onClick={() => handleSignup()}
+                type="submit"
                 disabled={isSubmitting}
                 className="w-full py-2 px-4 bg-[#E41E3F] text-white rounded hover:bg-[#C41E3F]"
               >
