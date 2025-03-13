@@ -59,7 +59,7 @@ public class User {
 
     private boolean protect;
 
-    private String refreshToken;
+    // private String refreshToken;
 
     // những lĩnh vực người dùng quan tâm
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -229,13 +229,4 @@ public class User {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
 }

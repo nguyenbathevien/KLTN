@@ -33,11 +33,18 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
-    public User handleFetchUser(Long id) {
+    public User handleFetchUser(Long id) throws CustomException {
+        if (!this.userRepository.findById(id).isPresent()) {
+            throw new CustomException("User not found");
+        }
+
         return this.userRepository.findById(id).isPresent() ? this.userRepository.findById(id).get() : null;
     }
 
-    public User handleGetUserByUsername(String username) {
+    public User handleGetUserByUsername(String username) throws CustomException {
+        if (this.userRepository.findByEmail(username) == null) {
+            throw new CustomException("User not found");
+        }
         return this.userRepository.findByEmail(username);
     }
 
@@ -56,5 +63,76 @@ public class UserService {
         resultPagination.setMeta(meta);
 
         return resultPagination;
+    }
+
+    public void handleDeleteUser(Long id) throws CustomException {
+        if (!this.userRepository.findById(id).isPresent()) {
+            throw new CustomException("User not found");
+        }
+
+        this.userRepository.deleteById(id);
+    }
+
+    public User handleUpdateUser(User user) throws CustomException {
+        User userDB = this.handleFetchUser(user.getId());
+
+        // role
+        if (user.getRole() != null) {
+            userDB.setRole(user.getRole());
+        }
+
+        // full name
+        if (user.getFullName() != null && !user.getFullName().equals("")) {
+            userDB.setFullName(user.getFullName());
+        }
+
+        // bio
+        if (user.getBio() != null && !user.getBio().equals("")) {
+            userDB.setBio(user.getBio());
+        }
+
+        // avatar
+        if (user.getAvatar() != null && !user.getAvatar().equals("")) {
+            userDB.setAvatar(user.getAvatar());
+        }
+
+        // background
+        if (user.getBackground() != null && !user.getBackground().equals("")) {
+            userDB.setBackground(user.getBackground());
+        }
+
+        // address
+        if (user.getAddress() != null && !user.getAddress().equals("")) {
+            userDB.setAddress(user.getAddress());
+        }
+
+        // phone
+        if (user.getPhone() != null && !user.getPhone().equals("")) {
+            userDB.setPhone(user.getPhone());
+        }
+
+        return this.userRepository.save(userDB);
+    }
+
+    public User handleUpdateActiveUser(long id) throws CustomException {
+        if (!this.userRepository.findById(id).isPresent()) {
+            throw new CustomException("User not found");
+        }
+
+        User user = this.userRepository.findById(id).get();
+        user.setActive(!user.isActive());
+
+        return this.userRepository.save(user);
+    }
+
+    public User handleUpdateProtectUser(long id) throws CustomException {
+        if (!this.userRepository.findById(id).isPresent()) {
+            throw new CustomException("User not found");
+        }
+
+        User user = this.userRepository.findById(id).get();
+        user.setProtect(!user.isProtect());
+
+        return this.userRepository.save(user);
     }
 }

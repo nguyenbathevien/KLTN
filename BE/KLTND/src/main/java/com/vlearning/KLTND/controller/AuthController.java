@@ -71,9 +71,9 @@ public class AuthController {
                 String accessToken = this.securityUtil.createAccessToken(responseUser);
                 responseUser.setAccessToken(accessToken);
 
-                String refreshToken = this.securityUtil.createAccessToken(responseUser);
-                responseUser.setRefreshToken(refreshToken);
-                user.setRefreshToken(refreshToken);
+                // String refreshToken = this.securityUtil.createAccessToken(responseUser);
+                // responseUser.setRefreshToken(refreshToken);
+                // user.setRefreshToken(refreshToken);
 
                 res.setData(responseUser);
                 return ResponseEntity.ok(res);

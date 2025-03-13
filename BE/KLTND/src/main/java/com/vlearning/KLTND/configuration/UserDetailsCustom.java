@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.vlearning.KLTND.service.UserService;
+import com.vlearning.KLTND.util.exception.CustomException;
 
 @Component("userDetailsService") // ghi đè lại UserDetailsService, vì quy tắc đặt tên của bean nên chữ cái đầu là
                                  // viết thường
@@ -21,7 +22,13 @@ public class UserDetailsCustom implements UserDetailsService {
     @Override
     // query user trong database bằng tham số username truyền vào này
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.vlearning.KLTND.domain.User user = userService.handleGetUserByUsername(username);
+        com.vlearning.KLTND.domain.User user = null;
+        try {
+            user = userService.handleGetUserByUsername(username);
+        } catch (CustomException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         if (user == null) {
             throw new UsernameNotFoundException("Username/Password invalid");
