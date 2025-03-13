@@ -16,8 +16,6 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user, handleLogout } = useAuth();
-  console.log(user);
-
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(2);
   const [notificationCount, setNotificationCount] = useState(3);
@@ -27,13 +25,15 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
+        setIsOpenUserDropdown(false);
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   const dropdownVariants = {
     hidden: { opacity: 0, y: -10, scale: 0.95 },
@@ -79,18 +79,18 @@ const Header = () => {
           </Link>
 
           <div className="hidden lg:flex items-center space-x-8">
-            <a
-              href="#"
+            <Link
+              to={"/"}
               className="text-foreground dark:text-white hover:text-primary"
             >
               Home
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to={"/courses"}
               className="text-foreground dark:text-white hover:text-primary"
             >
               Courses
-            </a>
+            </Link>
             <div className="relative">
               <button
                 onClick={() => toggleDropdown("categories")}
@@ -234,7 +234,11 @@ const Header = () => {
                 <AnimatePresence>
                   {isOpenUserDropdown && (
                     <>
-                      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" />
+                      <div
+                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+                        role="button"
+                        onClick={() => setIsOpenUserDropdown(false)}
+                      />
                       <motion.div
                         initial="hidden"
                         animate="visible"

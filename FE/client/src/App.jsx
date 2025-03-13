@@ -5,12 +5,14 @@ import PublicRoutes from "./routes/PublicRoutes";
 import Verify from "./pages/auth/Verify";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./contexts/AuthContext";
+import ScrollToTop from "./components/common/Layout/ScrollToTop";
 // import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* Route public */}
           <Route path="/*" element={<PublicRoutes />} />

@@ -3,8 +3,8 @@ import HomeLayout from "../components/common/Layout/HomeLayout";
 import HomePage from "../pages/guest/Home/HomePage";
 import LoginPage from "../pages/auth/LoginPage";
 import Register from "../pages/auth/Register";
-import CourseCatalogPage from "../pages/guest/CourseCatalog/CourseCatalogPage";
 import CourseDetailPage from "../pages/guest/CourseDetail/CourseDetailPage";
+import CourseListingPage from "../pages/guest/CourseCatalog/CourseListingPage";
 
 const PublicRoutes = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ const PublicRoutes = () => {
         <HomeLayout>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/courses" element={<CourseCatalogPage />} />
+            <Route path="/courses" element={<CourseListingPage />} />
             <Route path="/course/:id" element={<CourseDetailPage />} />
           </Routes>
         </HomeLayout>
