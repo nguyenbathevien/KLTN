@@ -17,11 +17,20 @@ import avatar from "../../../assets/images/avatar.png";
 
 const Header = () => {
   const { user, handleLogout } = useAuth();
+  const [cart, setCart] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(2);
+  const [cartCount, setCartCount] = useState(0);
   const [notificationCount, setNotificationCount] = useState(3);
   const [isOpenUserDropdown, setIsOpenUserDropdown] = useState(false);
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(cartItems);
+    setCartCount(cartItems.length);
+  }, []);
+
+  console.log(cart);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -156,7 +165,7 @@ const Header = () => {
                     className="absolute right-0 mt-2 w-80 bg-card dark:bg-gray-700 rounded-md shadow-lg py-4"
                   >
                     <div className="px-4">
-                      {cartItems.map((item) => (
+                      {cart.map((item) => (
                         <div
                           key={item.id}
                           className="flex justify-between items-center py-2"

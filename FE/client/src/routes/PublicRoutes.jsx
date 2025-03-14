@@ -5,6 +5,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import Register from "../pages/auth/Register";
 import CourseDetailPage from "../pages/guest/CourseDetailPage";
 import CourseListingPage from "../pages/guest/CourseListingPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 const PublicRoutes = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const PublicRoutes = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       ) : (
         <HomeLayout>
@@ -24,6 +26,7 @@ const PublicRoutes = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/courses" element={<CourseListingPage />} />
             <Route path="/course/:id" element={<CourseDetailPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </HomeLayout>
       )}

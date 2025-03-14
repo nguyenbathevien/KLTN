@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaStar,
@@ -9,6 +9,7 @@ import {
   FaUser,
   FaChartBar,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const courses = [
   {
@@ -95,7 +96,18 @@ const courses = [
   },
 ];
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, cart, setCart }) => {
+  console.log(cart);
+
+  const handleAddToCart = (course) => {
+    if (cart.find((c) => c.id === course.id)) {
+      return;
+    }
+    toast.success("Added to cart!", { autoClose: 1000 });
+    setCart((prev) => [...prev, course]);
+    // Không log hay cập nhật localStorage tại đây
+  };
+
   return (
     <motion.div
       layout
@@ -103,7 +115,8 @@ const CourseCard = ({ course }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       whileHover={{ scale: 1.02 }}
-      className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col"
+      onClick={() => (window.location.href = `/course/${course.id}`)}
     >
       <div className="relative pb-[60%]">
         <img
@@ -113,11 +126,11 @@ const CourseCard = ({ course }) => {
           loading="lazy"
         />
       </div>
-      <div className="p-4 flex flex-col justify-between h-[228px]">
+      <div className="p-4 flex-1 flex flex-col justify-between">
+        <h3 className="text-lg font-heading text-foreground mb-2">
+          {course.title}
+        </h3>
         <div>
-          <h3 className="text-lg font-heading text-foreground mb-2">
-            {course.title}
-          </h3>
           <div className="flex items-center mb-2 text-sm text-accent">
             <FaUser className="mr-2" />
             <span>{course.instructor}</span>
@@ -128,8 +141,6 @@ const CourseCard = ({ course }) => {
             <FaChartBar className="ml-4 mr-2" />
             <span>{course.level}</span>
           </div>
-        </div>
-        <div>
           <p className="text-sm text-accent-foreground mb-3">
             {course.description}
           </p>
@@ -141,6 +152,15 @@ const CourseCard = ({ course }) => {
             <span className="font-bold text-primary">${course.price}</span>
           </div>
         </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddToCart(course);
+          }}
+          className=" bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors mt-2"
+        >
+          Add to Cart
+        </button>
       </div>
     </motion.div>
   );
@@ -154,6 +174,10 @@ const CourseListingPage = () => {
     priceRange: "all",
   });
   const [showFilters, setShowFilters] = useState(false);
+  const [cart, setCart] = useState(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
 
   const filteredCourses = courses.filter((course) => {
     return (
@@ -165,6 +189,10 @@ const CourseListingPage = () => {
         (filters.priceRange === "paid" && course.price > 0))
     );
   });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <div className="bg-background p-4 md:p-8 mt-16">
@@ -272,7 +300,12 @@ const CourseListingPage = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredCourses.map((course) => (
-                    <CourseCard key={course.id} course={course} />
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      cart={cart}
+                      setCart={setCart}
+                    />
                   ))}
                 </div>
               )}

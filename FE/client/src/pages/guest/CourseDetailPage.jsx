@@ -65,6 +65,10 @@ const CourseDetailPage = () => {
     setExpandedSection(expandedSection === index ? null : index);
   };
 
+  const handleEnroll = (course) => {
+    localStorage.setItem("enrolledCourse", JSON.stringify([course]));
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <motion.div
@@ -209,7 +213,10 @@ const CourseDetailPage = () => {
               </div>
             </div>
 
-            <button className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors mb-6">
+            <button
+              onClick={() => handleEnroll(course)}
+              className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors mb-6"
+            >
               Enroll Now
             </button>
 

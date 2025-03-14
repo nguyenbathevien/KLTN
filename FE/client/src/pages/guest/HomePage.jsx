@@ -101,6 +101,7 @@ const App = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-primary text-white px-8 py-3 rounded-md text-lg font-semibold"
+            onClick={() => (window.location.href = "/courses")}
           >
             Start Learning Now
           </motion.button>
