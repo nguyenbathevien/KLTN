@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { motion } from "framer-motion"; // Import motion for animations
+
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -147,7 +149,13 @@ const Register = () => {
       {" "}
       {/* Thêm h-screen để full màn hình */}
       {/* Left Side - Slider */}
-      <div className="hidden lg:block lg:w-1/2 h-screen">
+      <motion.div
+        className="hidden lg:block lg:w-1/2 h-screen"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+
         {" "}
         {/* Thêm h-screen */}
         <Swiper
@@ -190,7 +198,13 @@ const Register = () => {
         </Swiper>
       </div>
       {/* Right Side - Registration Form */}
-      <div className="flex-1 flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8">
+      <motion.div
+        className="flex-1 flex items-center justify-center min-h-screen bg-white px-4 sm:px-6 lg:px-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+
         {" "}
         {/* Thêm min-h-screen và flex items-center justify-center */}
         <div className="w-full max-w-md space-y-8">
@@ -296,4 +310,5 @@ const Register = () => {
     </div>
   );
 };
+
 export default Register;
