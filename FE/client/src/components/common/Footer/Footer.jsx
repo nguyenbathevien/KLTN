@@ -43,7 +43,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <h3 className="text-xl text-primary font-heading mb-4">
-              V-Learning
+              {import.meta.env.VITE_APP_NAME}
             </h3>
             <p className="text-accent-foreground mb-4">
               Empowering learners worldwide with quality online education.
@@ -128,7 +128,8 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-accent-foreground">
-              © {new Date().getFullYear()} V-Learning. All rights reserved.
+              © {new Date().getFullYear()} {import.meta.env.VITE_APP_NAME}. All
+              rights reserved.
             </p>
             <div className="flex space-x-4 text-sm">
               <a href="#" className="hover:text-primary transition-colors">

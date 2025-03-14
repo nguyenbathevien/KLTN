@@ -85,7 +85,7 @@ const Header = () => {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link to={"/"} className="text-2xl font-bold text-primary">
-            V-Learning
+            {import.meta.env.VITE_APP_NAME}
           </Link>
 
           <div className="hidden lg:flex items-center space-x-8">
