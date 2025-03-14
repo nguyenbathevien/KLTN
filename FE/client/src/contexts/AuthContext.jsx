@@ -1,24 +1,59 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { getCurrentUser, login, logout } from "../services/auth.services";
 
-const AuthContext = createContext(null);
+// Tạo AuthContext
+const AuthContext = createContext();
 
+// Provider quản lý xác thực
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (userData) => {
-    // Here you would typically validate the user credentials with your backend
-    setUser(userData);
+  // Gọi API login và cập nhật user
+  const handleLogin = async (data) => {
+    try {
+      const userData = await login(data);
+      setUser(userData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const logout = () => {
-    setUser(null);
+  // Gọi API logout
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // Lấy thông tin user khi load trang
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, handleLogin, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+// Custom hook để sử dụng AuthContext
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

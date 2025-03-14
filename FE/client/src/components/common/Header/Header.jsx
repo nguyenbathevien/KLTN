@@ -1,27 +1,31 @@
-import { useState, useEffect, useRef } from "react";
-import { FaRegUser } from "react-icons/fa";
-import { FiHeart, FiBell, FiMenu, FiShoppingCart, FiX } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiShoppingCart,
+  FiBell,
+  FiMenu,
+  FiX,
+  FiChevronDown,
+  FiSettings,
+  FiLogOut,
+  FiGlobe,
+  FiHelpCircle,
+} from "react-icons/fi";
+import { useAuth } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const userDropdownRef = useRef(null);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const { user, handleLogout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(2);
+  const [notificationCount, setNotificationCount] = useState(3);
+  const [isOpenUserDropdown, setIsOpenUserDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        userDropdownRef.current &&
-        !userDropdownRef.current.contains(event.target)
-      ) {
-        setIsUserDropdownOpen(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpenUserDropdown(false);
       }
     };
 
@@ -29,213 +33,340 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [dropdownRef]);
+
+  const dropdownVariants = {
+    hidden: { opacity: 0, y: -10, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+  };
+
+  const menuItems = [
+    { icon: <FiSettings className="w-5 h-5" />, label: "Account Settings" },
+    { icon: <FiGlobe className="w-5 h-5" />, label: "Language" },
+    { icon: <FiHelpCircle className="w-5 h-5" />, label: "Help & Support" },
+    { icon: <FiLogOut className="w-5 h-5" />, label: "Logout" },
+  ];
+
+  const categories = [
+    "Web Development",
+    "Design",
+    "Marketing",
+    "Programming Languages",
+    "Data Science",
+  ];
+  const cartItems = [
+    { id: 1, title: "Advanced React Course", price: 99.99 },
+    { id: 2, title: "UI/UX Masterclass", price: 79.99 },
+  ];
+  const notifications = [
+    { id: 1, message: "New course update available", isUnread: true },
+    { id: 2, message: "Purchase confirmed", isUnread: true },
+    { id: 3, message: "Learning milestone achieved", isUnread: true },
+  ];
+
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const toggleDropdown = (dropdown) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-card shadow-sm">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link
-            to={"/"}
-            onClick={scrollToTop}
-            className="text-2xl font-bold text-primary"
-          >
+    <header className="fixed w-full top-0 z-50 bg-card dark:bg-gray-800 shadow-sm">
+      <nav className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Link to={"/"} className="text-2xl font-bold text-primary">
             V-Learning
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-8">
             <Link
-              onClick={scrollToTop}
               to={"/"}
-              className="text-foreground hover:text-primary"
+              className="text-foreground dark:text-white hover:text-primary"
             >
               Home
             </Link>
             <Link
               to={"/courses"}
-              className="text-foreground hover:text-primary"
+              className="text-foreground dark:text-white hover:text-primary"
             >
               Courses
             </Link>
-            <a href="#" className="text-foreground hover:text-primary">
-              Categories
-            </a>
-            <a href="#" className="text-foreground hover:text-primary">
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown("categories")}
+                className="flex items-center space-x-1 text-foreground dark:text-white hover:text-primary"
+              >
+                <span>Categories</span>
+                <FiChevronDown />
+              </button>
+              <AnimatePresence>
+                {activeDropdown === "categories" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full mt-2 w-48 bg-card dark:bg-gray-700 rounded-md shadow-lg py-2"
+                  >
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        className="block w-full text-left px-4 py-2 text-sm text-foreground dark:text-white hover:bg-primary hover:text-white"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <a
+              href="#"
+              className="text-foreground dark:text-white hover:text-primary"
+            >
               About Us
             </a>
-            <a href="#" className="text-foreground hover:text-primary">
+            <a
+              href="#"
+              className="text-foreground dark:text-white hover:text-primary"
+            >
               Contact
             </a>
-          </nav>
-
-          <div className="flex items-center space-x-4">
-            <div className="relative group">
-              <button className="p-2 rounded-full hover:bg-muted">
-                <FiHeart className="w-5 h-5" />
-              </button>
-              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                2
-              </span>
-              <div className="absolute right-0 mt-2 w-72 bg-card rounded-md shadow-lg py-1 hidden group-hover:block before:content-[''] before:absolute before:-top-3 before:right-0 before:w-72 before:h-8 before:bg-transparent">
-                <div className="p-4 text-sm text-foreground">
-                  <h3 className="font-semibold mb-2">Favorite Courses</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97"
-                        className="w-10 h-10 rounded object-cover"
-                      />
-                      <div className="flex-1">
-                        <p className="font-medium">Web Development Bootcamp</p>
-                        <p className="text-accent text-xs">$99.99</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group">
-              <button className="p-2 rounded-full hover:bg-muted">
-                <FiBell className="w-5 h-5" />
-              </button>
-              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                5
-              </span>
-              <div className="absolute right-0 mt-2 w-80 bg-card rounded-md shadow-lg py-1 hidden group-hover:block before:content-[''] before:absolute before:-top-3 before:right-0 before:w-72 before:h-8 before:bg-transparent">
-                <div className="p-4 text-sm text-foreground">
-                  <h3 className="font-semibold mb-2">Notifications</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-start gap-2 p-2 hover:bg-muted rounded-md">
-                      <div className="flex-1">
-                        <p>New course available: Advanced React Patterns</p>
-                        <p className="text-accent text-xs">2 hours ago</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group">
-              <Link to={"/student/cart"} onClick={scrollToTop}>
-                <div className="p-2 rounded-full hover:bg-muted">
-                  <FiShoppingCart className="w-5 h-5" />
-                </div>
-              </Link>
-              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                3
-              </span>
-              <div className="absolute right-0 mt-2 w-72 bg-card rounded-md shadow-lg py-1 hidden group-hover:block before:content-[''] before:absolute before:-top-3 before:right-0 before:w-72 before:h-8 before:bg-transparent">
-                <div className="p-4 text-sm text-foreground">
-                  <h3 className="font-semibold mb-2">Shopping Cart</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71"
-                        className="w-10 h-10 rounded object-cover"
-                      />
-                      <div className="flex-1">
-                        <p className="font-medium">Data Science Fundamentals</p>
-                        <p className="text-accent text-xs">$89.99</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-border">
-                    <div className="flex justify-between mb-2">
-                      <span>Total:</span>
-                      <span className="font-semibold">$269.97</span>
-                    </div>
-                    <button className="w-full bg-primary text-white rounded-md py-2 text-sm font-medium hover:bg-opacity-90">
-                      Checkout
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative" ref={userDropdownRef}>
-              <button
-                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                className="p-2 rounded-full hover:bg-muted"
-              >
-                <FaRegUser className="w-5 h-5" />
-              </button>
-              {isUserDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-card rounded-md shadow-lg py-1">
-                  <Link
-                    to={"/student/dashboard"}
-                    onClick={() => setIsUserDropdownOpen(false)}
-                    className="block px-4 py-2 text-sm text-foreground hover:bg-muted"
-                  >
-                    Profile Settings
-                  </Link>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-foreground hover:bg-muted"
-                  >
-                    My Courses
-                  </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-foreground hover:bg-muted"
-                  >
-                    Logout
-                  </a>
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-full hover:bg-muted"
-            >
-              {isMenuOpen ? (
-                <FiX className="w-6 h-6" />
-              ) : (
-                <FiMenu className="w-6 h-6" />
-              )}
-            </button>
           </div>
+
+          <div className="hidden lg:flex items-center space-x-6">
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown("cart")}
+                className="relative text-foreground dark:text-white hover:text-primary"
+              >
+                <FiShoppingCart className="text-2xl" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+              <AnimatePresence>
+                {activeDropdown === "cart" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute right-0 mt-2 w-80 bg-card dark:bg-gray-700 rounded-md shadow-lg py-4"
+                  >
+                    <div className="px-4">
+                      {cartItems.map((item) => (
+                        <div
+                          key={item.id}
+                          className="flex justify-between items-center py-2"
+                        >
+                          <span className="text-sm text-foreground dark:text-white">
+                            {item.title}
+                          </span>
+                          <span className="text-sm font-semibold text-foreground dark:text-white">
+                            ${item.price}
+                          </span>
+                        </div>
+                      ))}
+                      <div className="mt-4 pt-4 border-t border-border dark:border-gray-600">
+                        <button className="w-full bg-primary text-white rounded-md py-2 hover:bg-opacity-90">
+                          Checkout
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown("notifications")}
+                className="relative text-foreground dark:text-white hover:text-primary"
+              >
+                <FiBell className="text-2xl" />
+                {notificationCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {notificationCount}
+                  </span>
+                )}
+              </button>
+              <AnimatePresence>
+                {activeDropdown === "notifications" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute right-0 mt-2 w-80 bg-card dark:bg-gray-700 rounded-md shadow-lg py-4"
+                  >
+                    <div className="px-4">
+                      {notifications.map((notification) => (
+                        <div
+                          key={notification.id}
+                          className="py-2 border-b border-border dark:border-gray-600 last:border-0"
+                        >
+                          <p className="text-sm text-foreground dark:text-white">
+                            {notification.message}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {user ? (
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsOpenUserDropdown(!isOpenUserDropdown)}
+                  aria-label="User menu"
+                  aria-expanded={isOpenUserDropdown}
+                  aria-haspopup="true"
+                  className="flex items-center space-x-2"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"
+                    alt="User Profile"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                </button>
+                <AnimatePresence>
+                  {isOpenUserDropdown && (
+                    <>
+                      <div
+                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+                        role="button"
+                        onClick={() => setIsOpenUserDropdown(false)}
+                      />
+                      <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        variants={dropdownVariants}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-2 w-72 rounded-lg bg-card shadow-lg border border-border z-50"
+                        role="menu"
+                        aria-orientation="vertical"
+                      >
+                        <div className="p-4 border-b border-border">
+                          <div className="flex items-center space-x-3">
+                            <img
+                              src={
+                                user?.avatar ||
+                                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"
+                              }
+                              alt="User profile"
+                              className="w-12 h-12 rounded-full object-cover"
+                            />
+                            <div>
+                              <h3 className="font-heading text-foreground">
+                                {user.fullName}
+                              </h3>
+                              <p className="text-sm text-accent">
+                                {user.email}
+                              </p>
+                              <span className="inline-block mt-1 text-xs px-2 py-0.5 bg-muted text-muted-foreground rounded-full">
+                                {user.role}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="p-2">
+                          {menuItems.map((item, index) => (
+                            <motion.button
+                              key={index}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => {
+                                if (item.label === "Logout") handleLogout();
+                              }}
+                              className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground transition-colors"
+                              role="menuitem"
+                            >
+                              <span className="mr-3 text-accent">
+                                {item.icon}
+                              </span>
+                              {item.label}
+                            </motion.button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  window.location.href = "/login";
+                }}
+                className="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90"
+              >
+                Sign In
+              </button>
+            )}
+          </div>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden text-foreground dark:text-white"
+          >
+            {isOpen ? (
+              <FiX className="text-2xl" />
+            ) : (
+              <FiMenu className="text-2xl" />
+            )}
+          </button>
         </div>
 
-        {isMenuOpen && (
-          <div className="md:hidden py-4">
-            <Link
-              to={"/"}
-              onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-foreground hover:text-primary"
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden mt-4"
             >
-              Home
-            </Link>
-            <Link
-              to={"/courses"}
-              onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-foreground hover:text-primary"
-            >
-              Courses
-            </Link>
-            <a
-              href="#"
-              className="block py-2 text-foreground hover:text-primary"
-            >
-              Categories
-            </a>
-            <a
-              href="#"
-              className="block py-2 text-foreground hover:text-primary"
-            >
-              About Us
-            </a>
-            <a
-              href="#"
-              className="block py-2 text-foreground hover:text-primary"
-            >
-              Contact
-            </a>
-          </div>
-        )}
-      </div>
+              <div className="flex flex-col space-y-4">
+                <a
+                  href="#"
+                  className="text-foreground dark:text-white hover:bg-primary hover:text-white rounded-md px-4 py-2"
+                >
+                  Home
+                </a>
+                <a
+                  href="#"
+                  className="text-foreground dark:text-white hover:bg-primary hover:text-white rounded-md px-4 py-2"
+                >
+                  Courses
+                </a>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    className="text-left px-4 py-2 text-foreground dark:text-white hover:bg-primary hover:text-white rounded-md"
+                  >
+                    {category}
+                  </button>
+                ))}
+                <a
+                  href="#"
+                  className="text-foreground dark:text-white hover:bg-primary hover:text-white rounded-md px-4 py-2"
+                >
+                  About Us
+                </a>
+                <a
+                  href="#"
+                  className="text-foreground dark:text-white hover:bg-primary hover:text-white rounded-md px-4 py-2"
+                >
+                  Contact
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
     </header>
   );
 };
