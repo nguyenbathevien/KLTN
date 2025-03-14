@@ -31,6 +31,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "courses")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Course {
 
     @Id
@@ -47,12 +51,12 @@ public class Course {
     private String image;
 
     @ManyToOne()
-    @JoinColumn(name = "own_by")
+    @JoinColumn(name = "owner")
     @JsonIgnoreProperties(value = { "password", "role", "fields", "skills", "ownCourses",
             "purchasedCourses", "favoriteCourses", "voucherProgresses", "achievementProgresses", "comments",
             "reactions", "userNotifications", "followings", "followers", "active", "protect", "createdAt",
             "updatedAt" })
-    private User ownBy;
+    private User owner;
 
     private Long price;
 
@@ -92,101 +96,4 @@ public class Course {
     public void handleBeforeUpdate() {
         this.updatedAt = Instant.now();
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public User getOwnBy() {
-        return ownBy;
-    }
-
-    public void setOwnBy(User ownBy) {
-        this.ownBy = ownBy;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public CourseApproveEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(CourseApproveEnum status) {
-        this.status = status;
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
-    }
-
-    public List<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
 }

@@ -7,8 +7,6 @@ import com.vlearning.KLTND.domain.dto.request.RegisterReq;
 import com.vlearning.KLTND.domain.dto.response.ResponseDTO;
 import com.vlearning.KLTND.service.EmailService;
 
-import java.net.http.HttpRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
