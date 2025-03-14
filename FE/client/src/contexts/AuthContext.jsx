@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { getCurrentUser, login, logout } from "../services/auth.services";
 
 // Tạo AuthContext

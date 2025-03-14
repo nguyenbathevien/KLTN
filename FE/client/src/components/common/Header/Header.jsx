@@ -13,6 +13,7 @@ import {
 } from "react-icons/fi";
 import { useAuth } from "../../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import avatar from "../../../assets/images/avatar.png";
 
 const Header = () => {
   const { user, handleLogout } = useAuth();
@@ -226,7 +227,7 @@ const Header = () => {
                   className="flex items-center space-x-2"
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"
+                    src={user?.avatar || avatar}
                     alt="User Profile"
                     className="w-8 h-8 rounded-full object-cover"
                   />
@@ -245,17 +246,14 @@ const Header = () => {
                         exit="hidden"
                         variants={dropdownVariants}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 mt-2 w-72 rounded-lg bg-card shadow-lg border border-border z-50"
+                        className="absolute right-0 mt-2 w-64 rounded-lg bg-card shadow-lg border border-border z-50"
                         role="menu"
                         aria-orientation="vertical"
                       >
                         <div className="p-4 border-b border-border">
                           <div className="flex items-center space-x-3">
                             <img
-                              src={
-                                user?.avatar ||
-                                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9"
-                              }
+                              src={user?.avatar || avatar}
                               alt="User profile"
                               className="w-12 h-12 rounded-full object-cover"
                             />
@@ -281,6 +279,8 @@ const Header = () => {
                               whileTap={{ scale: 0.98 }}
                               onClick={() => {
                                 if (item.label === "Logout") handleLogout();
+                                if (item.label === "Account Settings")
+                                  window.location.href = "/student/account";
                               }}
                               className="flex items-center w-full px-3 py-2 text-sm rounded-md hover:bg-muted text-foreground transition-colors"
                               role="menuitem"

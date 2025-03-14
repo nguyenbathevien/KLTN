@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useAuth } from "../../contexts/AuthContext";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../utils/validator";
 
 const LoginPage = () => {
   const { handleLogin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
   const onSubmit = (data) => {
     handleLogin({
@@ -68,13 +71,7 @@ const LoginPage = () => {
               <div className="relative">
                 <FiMail className="absolute top-3 left-3 text-accent" />
                 <input
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
+                  {...register("email")}
                   type="email"
                   className="w-full px-10 py-2 border rounded-md focus:ring-2 focus:ring-primary outline-none"
                   placeholder="Email address"
@@ -91,13 +88,7 @@ const LoginPage = () => {
               <div className="relative">
                 <FiLock className="absolute top-3 left-3 text-accent" />
                 <input
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 8,
-                      message: "Password must be at least 8 characters",
-                    },
-                  })}
+                  {...register("password")}
                   type={showPassword ? "text" : "password"}
                   className="w-full px-10 py-2 border rounded-md focus:ring-2 focus:ring-primary outline-none"
                   placeholder="Password"

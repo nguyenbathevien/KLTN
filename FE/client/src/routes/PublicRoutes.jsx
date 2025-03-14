@@ -1,10 +1,10 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import HomeLayout from "../components/common/Layout/HomeLayout";
-import HomePage from "../pages/guest/Home/HomePage";
+import HomePage from "../pages/guest/HomePage";
 import LoginPage from "../pages/auth/LoginPage";
 import Register from "../pages/auth/Register";
-import CourseDetailPage from "../pages/guest/CourseDetail/CourseDetailPage";
-import CourseListingPage from "../pages/guest/CourseCatalog/CourseListingPage";
+import CourseDetailPage from "../pages/guest/CourseDetailPage";
+import CourseListingPage from "../pages/guest/CourseListingPage";
 
 const PublicRoutes = () => {
   const location = useLocation();

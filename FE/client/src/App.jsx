@@ -6,9 +6,8 @@ import Verify from "./pages/auth/Verify";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./contexts/AuthContext";
 import ScrollToTop from "./components/common/Layout/ScrollToTop";
-
 import SurveyRoutes from "./routes/SurveyRoutes";
-// import PrivateRoute from "./routes/PrivateRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -20,7 +19,14 @@ function App() {
           <Route path="/*" element={<PublicRoutes />} />
 
           {/* Route dashboard student */}
-          <Route path="/student/*" element={<StudentRoutes />} />
+          <Route
+            path="/student/*"
+            element={
+              <PrivateRoute>
+                <StudentRoutes />
+              </PrivateRoute>
+            }
+          />
 
           <Route path="/verify" element={<Verify />} />
           <Route path="/survey/*" element={<SurveyRoutes />} />
@@ -34,8 +40,8 @@ function App() {
             }
           />
         </Routes>
+        <ToastContainer />
       </Router>
-      <ToastContainer />
     </AuthProvider>
   );
 }
