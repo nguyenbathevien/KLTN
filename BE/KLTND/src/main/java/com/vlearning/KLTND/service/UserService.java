@@ -114,6 +114,7 @@ public class UserService {
         return this.userRepository.save(userDB);
     }
 
+    // update active
     public User handleUpdateActiveUser(long id) throws CustomException {
         if (!this.userRepository.findById(id).isPresent()) {
             throw new CustomException("User not found");
@@ -125,6 +126,7 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
+    // update protect
     public User handleUpdateProtectUser(long id) throws CustomException {
         if (!this.userRepository.findById(id).isPresent()) {
             throw new CustomException("User not found");

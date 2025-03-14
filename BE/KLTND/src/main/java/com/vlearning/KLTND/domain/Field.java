@@ -31,8 +31,6 @@ public class Field {
     @NotBlank(message = "Feild's name can not be blank")
     private String name;
 
-    private boolean active;
-
     @OneToMany(mappedBy = "field", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = { "field", "users", "courses" })
     private List<Skill> skills;
@@ -55,7 +53,6 @@ public class Field {
     public void handleBeforeCreate() {
         // gán thời gian hiện tại
         this.createdAt = Instant.now();
-        this.setActive(true);
     }
 
     @PreUpdate
@@ -77,14 +74,6 @@ public class Field {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public List<Skill> getSkills() {
