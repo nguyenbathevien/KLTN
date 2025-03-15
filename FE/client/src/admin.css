@@ -1,0 +1,115 @@
+/* CSS cho table antd của trang admin  */
+.admin-table .ant-table {
+    background: transparent !important;
+}
+
+.admin-table .ant-table-thead > tr > th {
+    background: rgba(0, 0, 0, 0.6) !important;
+    color: white !important;
+}
+
+.admin-table .ant-table-tbody > tr > td {
+    background: transparent !important;
+    color: white !important;
+}
+
+.admin-table .ant-table-tbody > tr:hover > td {
+    background: rgba(185, 173, 173, 0.1) !important; 
+}
+
+/* Đổi màu icon lọc trong bảng */
+.admin-table .ant-table-filter-trigger {
+  color: white !important;
+}
+
+
+.admin-table .ant-pagination-prev button, 
+.admin-table .ant-pagination-next button {
+  color: white !important; 
+}
+.admin-table .ant-table-body {
+  min-height: 350px; /* Giữ chiều cao bảng không đổi */
+}
+.ant-pagination-item:hover {
+  background-color: #e6f7ff !important; /* Màu xanh nhạt */
+  border-color: #1890ff !important;
+}
+
+.ant-pagination-item:hover a {
+  color: #1890ff !important;
+}
+
+
+/* CSs của trang 404  */
+.page-404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #f8f9fa;
+
+    .content {
+        max-width: 500px;
+        padding: 20px;
+
+        h1 {
+            font-size: 100px;
+            font-weight: bold;
+            color: #e11d48;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #e11d48;
+            border-color: #e11d48;
+            border: none;
+            &:hover {
+                background-color: #be1a3c;
+                border-color: #be1a3c;
+            }
+        }
+    }
+}
+
+/* CSs nút up-to-top  */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #FE6B6E;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
+}
+  
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+  
+.ant-table-cell-scrollbar {
+  display: none !important;
+}

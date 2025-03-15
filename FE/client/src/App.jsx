@@ -1,18 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import TeacherRoutes from "./routes/TeacherRoutes";
-import StudentRoutes from "./routes/StudentRoutes";
-import PublicRoutes from "./routes/PublicRoutes";
-import Verify from "./pages/auth/Verify";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { AuthProvider } from "./contexts/AuthContext";
 import ScrollToTop from "./components/common/Layout/ScrollToTop";
-import SurveyRoutes from "./routes/SurveyRoutes";
+import { AuthProvider } from "./contexts/AuthContext";
+import Verify from "./pages/auth/Verify";
+import AdminRoutes from "./routes/AdminRoutes";
 import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoutes from "./routes/PublicRoutes";
+import StudentRoutes from "./routes/StudentRoutes";
+import SurveyRoutes from "./routes/SurveyRoutes";
+import TeacherRoutes from "./routes/TeacherRoutes";
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      {/* <Router> */}
         <ScrollToTop />
         <Routes>
           {/* Route public */}
@@ -39,9 +40,12 @@ function App() {
               // </PrivateRoute>
             }
           />
+
+           {/* Route dành cho admin  */}
+         <Route path="/admin/*" element={<AdminRoutes />} />
         </Routes>
         <ToastContainer />
-      </Router>
+      {/* </Router> */}
     </AuthProvider>
   );
 }
